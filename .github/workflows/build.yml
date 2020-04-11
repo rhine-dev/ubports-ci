@@ -29,7 +29,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     
-    - name: Initialization environment
+    - name: Initializing the build environment...
       run: |
         sudo apt-get update
         sudo apt-get install -y \
@@ -51,30 +51,48 @@ jobs:
         git config --global user.name "UBports Sony Rhine CI"
         git config --global user.email "thisemaildoesnotexist@exist.com"
 
-    - name: Downloading source code
+    - name: Downloading Halium & Honami source code...
       run: |
         source halium.env
         mkdir -p $ANDROID_ROOT
         cd $ANDROID_ROOT
         repo init -u https://github.com/Halium/android -b halium-7.1 --depth=1
         mkdir -p $ANDROID_ROOT/.repo/local_manifests
-        wget https://raw.githubusercontent.com/rhine-dev/halium-devices/honami/manifests/"$VENDOR"_"$DEVICE".xml -O $ANDROID_ROOT/.repo/local_manifests/$DEVICE.xml
+        wget https://raw.githubusercontent.com/rhine-dev/halium-devices/honami/manifests/"$VENDOR"_rhine.xml -O $ANDROID_ROOT/.repo/local_manifests/$DEVICE.xml
         repo sync -j8 -c --no-clone-bundle --no-tags
     
-    - name: Build HAL
+    - name: Building Honami HAL...
       run: |
         chmod +x build-hal.sh
         bash -x build-hal.sh
       shell: bash
 
-    - name : Upload boot image
+    - name : Uploading Honami boot image...
       uses: actions/upload-artifact@master
       with:
         name: halium-boot image
         path: /home/runner/work/halium/out/target/product/honami/halium-boot.img
 
-    - name : Upload system image
+    - name : Uploading Honami system image...
       uses: actions/upload-artifact@master
       with:
         name: System image
         path: /home/runner/work/halium/out/target/product/honami/system.img
+
+    - name: Building Amami HAL...
+      run : |
+        chmod +x build-hal-amami.sh
+        bash -x build-hal-amami.sh
+      shell: bash
+
+    - name : Uploading Amami boot image...
+      uses: actions/upload-artifact@master
+      with:
+        name: halium-boot image
+        path: /home/runner/work/halium/out/target/product/amami/halium-boot.img
+
+    - name : Uploading Amami system image...
+      uses: actions/upload-artifact@master
+      with:
+        name: System image
+        path: /home/runner/work/halium/out/target/product/amami/system.img
