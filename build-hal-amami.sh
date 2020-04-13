@@ -1,5 +1,5 @@
 #!/bin/bash
-source halium.env
+source amami.env
 cd $ANDROID_ROOT
 
 source build/envsetup.sh
