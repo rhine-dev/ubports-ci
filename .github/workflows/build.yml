@@ -65,34 +65,38 @@ jobs:
       run: |
         chmod +x build-hal.sh
         bash -x build-hal.sh
+        mv /home/runner/work/halium/out/target/product/honami/halium-boot.img /home/runner/work/halium/out/target/product/honami/honami-halium-boot.img
+        mv /home/runner/work/halium/out/target/product/honami/system.img /home/runner/work/halium/out/target/product/honami/honami-system.img
       shell: bash
 
     - name : Uploading Honami boot image...
       uses: actions/upload-artifact@master
       with:
-        name: halium-boot image
-        path: /home/runner/work/halium/out/target/product/honami/halium-boot.img
+        name: Honami halium-boot image
+        path: /home/runner/work/halium/out/target/product/honami/honami-halium-boot.img
 
     - name : Uploading Honami system image...
       uses: actions/upload-artifact@master
       with:
-        name: System image
-        path: /home/runner/work/halium/out/target/product/honami/system.img
+        name: Honami system image
+        path: /home/runner/work/halium/out/target/product/honami/honami-system.img
 
     - name: Building Amami HAL...
       run : |
         chmod +x build-hal-amami.sh
         bash -x build-hal-amami.sh
+        mv /home/runner/work/halium/out/target/product/amami/halium-boot.img /home/runner/work/halium/out/target/product/amami/amami-halium-boot.img
+        mv /home/runner/work/halium/out/target/product/amami/system.img /home/runner/work/halium/out/target/product/amami/amami-system.img
       shell: bash
 
     - name : Uploading Amami boot image...
       uses: actions/upload-artifact@master
       with:
-        name: halium-boot image
-        path: /home/runner/work/halium/out/target/product/amami/halium-boot.img
+        name: Amami halium-boot image
+        path: /home/runner/work/halium/out/target/product/amami/amami-halium-boot.img
 
     - name : Uploading Amami system image...
       uses: actions/upload-artifact@master
       with:
-        name: System image
-        path: /home/runner/work/halium/out/target/product/amami/system.img
+        name: Amami system image
+        path: /home/runner/work/halium/out/target/product/amami/amami-system.img
